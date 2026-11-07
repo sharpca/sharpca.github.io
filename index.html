@@ -1,109 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Celine (sharpca) — Research Notes</title>
-<meta name="description" content="Personal research page of Celine (sharpca): computational pathology, cell-level self-supervised learning, evaluation methodology.">
-<link rel="stylesheet" href="assets/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Celine (sharpca) — Research Notes</title>
+  <meta name="description" content="Personal research page of Celine (sharpca): computational pathology, cell-level self-supervised learning, evaluation methodology." />
 </head>
 <body>
-<canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-<nav id="topnav">
-  <a class="brand" href="#top">C<span>.</span></a>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#study">Study</a>
-    <a href="#notes">Notes</a>
-    <a href="https://github.com/sharpca" target="_blank" rel="noopener">GitHub ↗</a>
-  </div>
-  <button id="theme-toggle" aria-label="Toggle theme">◐</button>
-</nav>
-
-<header id="top" class="hero">
-  <p class="kicker reveal">RESEARCH NOTES · 2026</p>
-  <h1 class="reveal">Celine<span class="grad-text">.</span></h1>
-  <p class="hero-sub reveal">Computational pathology · cell-level self-supervised learning ·<br>evaluation methodology for trustworthy model claims.</p>
-  <p class="hero-role reveal"><span id="typewriter"></span><span class="cursor">▌</span></p>
-  <div class="hero-stats reveal" id="stats"></div>
-  <a class="scroll-cue" href="#about" aria-label="Scroll down">▾</a>
-</header>
-
-<main>
-  <section id="about">
-    <h2 class="reveal">About</h2>
-    <div class="glass card reveal">
-      <p>I build and stress-test representation-learning methods for histopathology images, with a focus on
-      what supervision signals actually encode — and what they silently destroy. Recent work: pre-registered,
-      audited multi-arm studies on teacher design for cell-level self-supervised learning.</p>
-      <p class="muted">This page is generated from a data layer (<span class="num">data/*.json</span>) — the notes
-      below are loaded at runtime, not hardcoded.</p>
-    </div>
-  </section>
-
-  <section id="study">
-    <h2 class="reveal">Does the teacher's field of view matter? <span class="muted-inline">— a pre-registered three-arm answer</span></h2>
-
-    <div class="glass card reveal">
-      <p>Three supervision contracts trained on the same 62k-cell pool, same budget, same frozen probe contract;
-      three task families; patient/tile-level paired bootstrap; two seeds; independent adversarial audit and a
-      bit-level closure rerun. Verdicts below are gate executions, not opinions.</p>
-    </div>
-
-    <div class="grid-2">
-      <div class="glass card reveal">
-        <h3>Accuracy by arm <span class="muted-inline">(bAcc)</span></h3>
-        <div id="chart-arms" class="chart"></div>
-        <p class="muted">T1 = PanNuke fine-grained typing · T2 = MoNuSAC cross-domain · T3 = tile→organ</p>
-      </div>
-      <div class="glass card reveal">
-        <h3>Paired contrasts <span class="muted-inline">(Δ pp, 95% CI, T1)</span></h3>
-        <div id="chart-forest" class="chart"></div>
-        <p class="muted">Full-context teacher beats the co-visible restricted teacher after confound exclusion.</p>
-      </div>
-    </div>
-
-    <div class="glass card reveal">
-      <h3>Gate execution</h3>
-      <ol id="gates" class="gates"></ol>
-    </div>
-
-    <div class="grid-2">
-      <div class="glass card reveal">
-        <h3><span class="dot dot-gain"></span>Where the gain comes from</h3>
-        <ul id="gain-list" class="mech-list"></ul>
-      </div>
-      <div class="glass card reveal">
-        <h3><span class="dot dot-cost"></span>Where the cost hides</h3>
-        <ul id="cost-list" class="mech-list"></ul>
-      </div>
-    </div>
-
-    <p class="muted reveal">Honest terms: continued-training adaptation (not from scratch); single-domain pool;
-    TCGA-overlap in-domain tendencies on absolute numbers. Full contracts, audit trail and gate logic in an
-    upcoming preprint.</p>
-  </section>
-
-  <section id="notes">
-    <h2 class="reveal">Notes timeline</h2>
-    <div id="timeline" class="timeline"></div>
-  </section>
-
-  <section id="contact">
-    <h2 class="reveal">Contact</h2>
-    <div class="glass card reveal">
-      <p>Best via <a href="https://github.com/sharpca" target="_blank" rel="noopener">GitHub</a>.</p>
-    </div>
-  </section>
-
-  <footer>
-    <span>© 2026 Celine</span> · <span>static SPA, zero external dependencies, no tracking</span> ·
-    <a href="https://github.com/sharpca/sharpca.github.io">source</a>
-  </footer>
-</main>
-
-<script src="assets/config.js"></script>
-<script src="assets/app.js"></script>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
