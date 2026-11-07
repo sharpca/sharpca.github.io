@@ -1,12 +1,20 @@
 [
   {
     "date": "2026-11-07",
-    "title": "Does the teacher's field of view matter? — three-arm verdict",
-    "summary": "Pre-registered controlled study: co-visible-region teacher restriction is unnecessary (full-context teacher +2.96 pp [1.92, 3.99]); full-context teacher adaptation is the only contract beating the frozen anchor (+3.42 pp [2.40, 4.42]); the cross-domain cost is a content-level shift on a pre-existing confusable family. Gain and cost are two faces of the same low-margin reshaping."
+    "title": "teacher 的视野重要吗？——三臂判定",
+    "tags": ["研究", "SSL", "预注册"],
+    "summary": "预注册对照研究：共同可见限制 teacher 无必要性（完整上下文 teacher +2.96 pp [1.92, 3.99] 纯内容效应）；完整上下文 teacher 适配是唯一跑赢冻结锚点的合同（+3.42 pp [2.40, 4.42]）；跨域代价是 content 型漂移、集中在先存可混淆家族。增益与代价是同一次低置信质量重塑的两面。"
   },
   {
     "date": "2026-11-07",
-    "title": "Repo-method forensics batch",
-    "summary": "Deep-read of the closest codebases: LEMON (training contract, weight provenance), VOLTA (λ_env = 1.0 from repo, pixel-level masking — plus two paper↔code discrepancies), iBOT (official repo is bytedance/ibot; random-MIM r=0 is exactly full-token distillation — the closest mechanism precedent). Notes filed for the preprint's methods section."
+    "title": "repo 取证批次",
+    "tags": ["取证", "复现"],
+    "summary": "最近邻代码库深读：LEMON（训练合同、权重来源，无官方训练仓库）；VOLTA（λ_env=1.0 来自 repo，像素级置零，两处论文↔代码不一致）；iBOT（官方仓库在 bytedance/ibot；random-MIM r=0 即全 token 蒸馏——最接近的机制先例）。笔记已归档，供 preprint 方法审计附录使用。"
+  },
+  {
+    "date": "2026-11-08",
+    "title": "站点 v2：Vue 3 多页重写",
+    "tags": ["工程"],
+    "summary": "个人页从单文件静态升级为 Vue 3 + vue-router + Tailwind CSS 4 + axios 的 Vite 多页工程（六路由），GitHub Actions 自动部署；数据层保留 Supabase 接入点。"
   }
 ]

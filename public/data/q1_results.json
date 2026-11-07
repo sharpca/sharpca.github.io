@@ -1,45 +1,45 @@
 {
   "meta": {
-    "study": "Teacher-view design in nuclear SSL — pre-registered three-arm controlled study",
+    "study": "nuclear SSL 中 teacher 视野设计——预注册三臂对照研究",
     "date": "2026-11-07",
     "cells": 62263,
     "audit_models": 16,
     "gates": 4,
-    "design": "ViT-S/8 continued-training adaptation, identical budget & probe contract, paired patient/tile-level bootstrap, 2 seeds, bit-level closure rerun"
+    "design": "ViT-S/8 续训适配（LEMON 官方权重初始化）；单域 SSL 池（PanNuke fold1，62,263 细胞）；同预算同探针合同（R1）；患者/tile 级配对 bootstrap（B=500，双 seed pooled）；独立对抗审计 + bit-level 闭环复跑"
   },
   "arms": [
-    { "id": "init", "label": "Init (frozen anchor)", "t1": 0.6565, "t2": 0.7757, "t3": 0.6837 },
-    { "id": "a0", "label": "A0 · no cross-view", "t1": 0.6193, "t2": 0.7332, "t3": 0.6147 },
-    { "id": "c1", "label": "C1 · same-view distill", "t1": 0.6277, "t2": 0.7359, "t3": 0.7088 },
-    { "id": "c", "label": "C · co-visible teacher", "t1": 0.6571, "t2": 0.7753, "t3": 0.6844 },
-    { "id": "b", "label": "B · full-context teacher", "t1": 0.6873, "t2": 0.7751, "t3": 0.7392 },
-    { "id": "F", "label": "F · frozen fusion", "t1": null, "t2": 0.7904, "t3": null }
+    { "id": "init", "label": "init · 冻结锚点（LEMON L12）", "t1": 0.6565, "t2": 0.7757, "t3": 0.6837 },
+    { "id": "a0", "label": "a0 · 无跨视野目标", "t1": 0.6193, "t2": 0.7332, "t3": 0.6147 },
+    { "id": "c1", "label": "c1 · 同视图 distill", "t1": 0.6277, "t2": 0.7359, "t3": 0.7088 },
+    { "id": "c", "label": "c · 共同可见限制 teacher", "t1": 0.6571, "t2": 0.7753, "t3": 0.6844 },
+    { "id": "b", "label": "b · 完整上下文 teacher", "t1": 0.6873, "t2": 0.7751, "t3": 0.7392 },
+    { "id": "F", "label": "F · 冻结融合（L40+L96）", "t1": null, "t2": 0.7904, "t3": null }
   ],
   "contrasts": [
-    { "name": "C − A0", "t1": 3.77, "lo": 2.94, "hi": 4.55 },
-    { "name": "C − C1", "t1": 2.96, "lo": 2.26, "hi": 3.64 },
-    { "name": "B − A0", "t1": 6.73, "lo": 5.36, "hi": 8.11 },
-    { "name": "B − C", "t1": 2.96, "lo": 1.92, "hi": 3.99 },
-    { "name": "B − Init", "t1": 3.42, "lo": 2.4, "hi": 4.42 },
-    { "name": "C − Init", "t1": 0.03, "lo": -0.86, "hi": 0.9 }
+    { "name": "c − a0", "t1": 3.77, "lo": 2.94, "hi": 4.55 },
+    { "name": "c − c1", "t1": 2.96, "lo": 2.26, "hi": 3.64 },
+    { "name": "b − a0", "t1": 6.73, "lo": 5.36, "hi": 8.11 },
+    { "name": "b − c", "t1": 2.96, "lo": 1.92, "hi": 3.99 },
+    { "name": "b − init", "t1": 3.42, "lo": 2.4, "hi": 4.42 },
+    { "name": "c − init", "t1": 0.03, "lo": -0.86, "hi": 0.9 }
   ],
   "gates": [
-    { "name": "Step-0 view-divergence premise", "detail": "both task families prefer the same 40px view; pos-embed interpolation confound noted", "verdict": "FAIL" },
-    { "name": "G1 necessity (C > A0)", "detail": "T1 +3.77 [2.94, 4.55], T2 +4.59 [0.44, 9.13] — cross-view signal itself helps", "verdict": "PASS" },
-    { "name": "G2 irreducibility (C − C1 ≥ 1pp)", "detail": "T1/T2 pass; T3 organ reverses across seeds", "verdict": "MIXED" },
-    { "name": "G3+G3′ teacher info source (B vs C)", "detail": "B − C = +2.96 [1.92, 3.99] pure content effect after confound exclusion → co-visible restriction judged unnecessary", "verdict": "FAIL" },
-    { "name": "Closure rerun (bit-level)", "detail": "config-identical rerun of arm B: loss matches to 4 decimals, T1 Δ +0.14pp within cudnn jitter", "verdict": "PASS" }
+    { "name": "step-0 视野分化前提", "detail": "两个任务族的最优视野同为 40px（differentiated=false）；96px 数字受 pos-embed 双三次插值损耗污染（~8pp），40px 胜幅不可全信", "verdict": "FAIL" },
+    { "name": "G1 必要性（c > a0）", "detail": "T1 +3.77 [2.94, 4.55]、T2 +4.59 [0.44, 9.13]——跨视野信号本身有用", "verdict": "PASS" },
+    { "name": "G2 不可化约（c − c1 ≥ 1pp）", "detail": "T1/T2 过；T3 器官任务两 seed 反转（c1 反超 c）", "verdict": "MIXED" },
+    { "name": "G3+G3′ 教师信息来源（b vs c）", "detail": "b − c = T1 +2.96 [1.92, 3.99]（双 seed CI>0）；混淆排除（蒸馏目标同为中央 26 对、mean 归约、2.4× 视野验算）→ 纯内容效应，共同可见限制机制判死", "verdict": "FAIL" },
+    { "name": "闭环复跑（bit-level）", "detail": "config 原样重跑 b 臂：T1 差 +0.14pp（cudnn 抖动内）、T2/T3 差 0.00pp、损失四位小数一致", "verdict": "PASS" }
   ],
   "mechanism": {
     "gain": [
-      "96.3% of the in-domain gain sits in the frozen anchor's bottom margin quartile (median percentile 0.18 → +0.30) — the low-confidence mass is reshaped.",
-      "66% of the gain comes from the anchor's two weakest classes (Epithelial +1.17 pp, Dead +1.14 pp); false positives drop in all five classes, none are hurt.",
-      "Clustered cells gain more than isolated ones (Spearman +0.052/+0.044 at r=64/128 px) — context statistics, not truncated-neighborhood fill."
+      "96.3% 的 in-domain 增益落在冻结锚点的 margin 底四分位（中位百分位 0.18 → +0.30）——被重塑的是低置信质量。",
+      "66% 的增益来自锚点最弱两类（Epithelial +1.17 pp、Dead +1.14 pp）；五个类 FP 全降，无一受损。",
+      "聚集细胞增益显著更大（r=64/128px Spearman +0.052/+0.044 双显著）——是上下文统计增强，不是截断邻域补全。"
     ],
     "cost": [
-      "Cross-domain macro-F1 cost concentrates on one pre-existing confusable family: Neutrophil F1 −21.6 pp (35× noise floor) via precision collapse, recall unchanged.",
-      "Mechanism is a broad content-level probability shift with re-ranking — not context leakage (0/64 false positives had a same-class neighbor), not regularization strength (matched-C), no feature aliasing.",
-      "No new confusion modes: a 16-model confusion audit shows the family edge in all of them; late-layer drift amplitude does not carry the push (direction ≈ 0)."
+      "跨域 macro-F1 代价集中在一个先存可混淆家族：Neutrophil F1 −21.6 pp（35× 噪声底），机制是精度坍缩，召回不动。",
+      "content 型广谱概率上移 + 排序重排——不是上下文渗漏（64 个 FP 中 0 个邻域有同类）、不是正则强度（matched-C）、无特征混叠。",
+      "不制造新混淆模式：16 模型混淆图中该家族边在所有模型出现；晚层漂移幅度不携带推力（方向 ≈ 0）。"
     ]
   }
 }

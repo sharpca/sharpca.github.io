@@ -1,50 +1,50 @@
 [
   {
     "repo": "LEMON", "id": "arXiv 2603.25802", "kind": "discrepancy",
-    "paper": "Local-global crop pairs deleted because 40px patches 'carry insufficient information'; KoLeo replaced by KDE.",
-    "code": "No official training repository exists (GitHub 404); weights on HF are non-gated MIT and SHA-256 match the local copy.",
-    "matters": "The deletion is a patch, not an information-boundary mechanism; our three-arm study formalizes exactly the question they sidestepped."
+    "paper": "删除 local-global crop 配对，理由是 40px patch \"carry insufficient information\"；KoLeo 换成 KDE。",
+    "code": "官方训练仓库不存在（GitHub 404）；HF 权重非 gated、MIT，SHA-256 与本地副本一致。",
+    "matters": "删除是承认问题的补丁，不是信息边界机制；我们的三臂研究恰好把这个问题形式化并给了判定。"
   },
   {
-    "repo": "LEMON — readout", "id": "Table 4 / Fig. 4", "kind": "precedent",
-    "paper": "Center-token (mean of 4×4 centered patch tokens) reads out at 0.727 on tile-FM probing while class tokens collapse to 0.52–0.54.",
-    "code": "Consistent with the released checkpoint layout (12 heads, patch 8).",
-    "matters": "Justifies token-level (never CLS) targets in any distillation arm."
+    "repo": "LEMON · readout", "id": "Table 4 / Fig. 4", "kind": "precedent",
+    "paper": "center-token（中央 4×4 patch token 均值）readout 在 tile-FM 探针上 0.727，而 class token 全崩到 0.52–0.54。",
+    "code": "与官方 checkpoint 结构一致（12 heads，patch 8）。",
+    "matters": "任何 distill 臂都应取 token 级 target、绝不用 CLS。"
   },
   {
     "repo": "VOLTA", "id": "Nat Commun 15:3942", "kind": "discrepancy",
-    "paper": "Env branch encoder described as 'LambdaNet'; MoCo memory queue of 65,536; env-loss weight λ unreported.",
-    "code": "No LambdaNet — env branch is an independent ResNet-18; queue = 0 (no queue); λ_env = 1.0 via the README command (--env-coef 1.0).",
-    "matters": "Cite repo values for reproducibility; the paper's reported queue does not exist in code."
+    "paper": "env 分支编码器写作 \"LambdaNet\"；MoCo memory queue 65,536；env 损失权重 λ 未报告。",
+    "code": "没有 LambdaNet——env 分支是独立 ResNet-18；queue = 0（无队列）；λ_env = 1.0（README 官方命令 --env-coef 1.0）。",
+    "matters": "复现引用须以 repo 为准；论文声称的 queue 在代码里不存在。"
   },
   {
-    "repo": "VOLTA — masking", "id": "main.py training loop", "kind": "precedent",
-    "paper": "Target cell and neighboring cells are masked to prevent shortcut and neighbor-type bias.",
-    "code": "Hard zeroing in the training loop: patch[0][mask...] = 0, a bool square centered on the nucleus (side = int(size × mask_ratio)); segmentation mode zeroes all nucleus pixels.",
-    "matters": "Masking happens at the pixel/loss end, after the encoder sees the full image — exactly the family our restricted-teacher arm was designed to test (and it lost)."
+    "repo": "VOLTA · masking", "id": "main.py 训练循环", "kind": "precedent",
+    "paper": "屏蔽目标核与邻核，防 shortcut 与邻胞类型偏置。",
+    "code": "训练循环里硬置零：patch[0][mask...] = 0，mask 是以核为中心的 bool 方区（边长 = int(尺寸 × mask_ratio)）；segmentation 模式再叠加全部核像素置零。",
+    "matters": "屏蔽发生在像素/损失端、编码器见过全图——正是我们的限制 teacher 臂要检验的家族（且它输了）。"
   },
   {
     "repo": "iBOT", "id": "arXiv 2111.07832", "kind": "discrepancy",
-    "paper": "facebookresearch/iBOT is cited by many; random-MIM described with probability r=0.",
-    "code": "Official code lives at bytedance/ibot; random-MIM is a ratio list + random.choice (loader.py:37-43), r=0 means full-token distillation; patch target = softmax((logit − center)/τ_p) with centering EMA 0.9, τ_p 0.04→0.07; patch:CLS = 1:1.",
-    "matters": "r=0 is exactly our winning arm's signal form — the closest mechanism precedent, which is why our claim had to rest on the adaptation-setting attribution, not the signal."
+    "paper": "很多论文引用 facebookresearch/iBOT；random-MIM 描述含 r=0 概率。",
+    "code": "官方代码在 bytedance/ibot；random-MIM 是比率列表 + random.choice（loader.py:37-43），r=0 即全 token 蒸馏；patch target = softmax((logit − center)/τ_p)、centering EMA 0.9、τ_p 0.04→0.07；patch:CLS = 1:1。",
+    "matters": "r=0 分支与我们胜出臂的信号形态完全同构——最近的机制先例，所以我们的主张只能落在 adaptation 设定的受控归因上。"
   },
   {
     "repo": "CellPath-Bench", "id": "arXiv 2608.21060", "kind": "precedent",
-    "paper": "Nuc readout 'samples the feature grid at the registered nuclear center … does not imply a nucleus-restricted receptive field'.",
-    "code": "Evaluation-only; 304,920 probe runs; protocol scores explicitly not comparable across protocols.",
-    "matters": "Readout ≠ receptive field: training-signal differences must carry the claim, which shaped our probe contract."
+    "paper": "Nuc readout \"samples the feature grid at the registered nuclear center … does not imply a nucleus-restricted receptive field\"。",
+    "code": "纯评测：304,920 次探针运行；协议间绝对分明确不可比。",
+    "matters": "readout ≠ 感受野：主张必须落在训练信号差异上，这塑造了我们的探针合同。"
   },
   {
     "repo": "CytoFormer", "id": "arXiv 2608.16718", "kind": "precedent",
-    "paper": "56µm crop is optimal (FOV sweep 28/56/112/224µm = 79.1/83.3/82.5/77.1 macro-F1); 112µm guard band prevents any test/train view overlap.",
-    "code": "Checkpoint public (HF zhihuanglab/CytoFormer); 0.25 µm/px confirmed.",
-    "matters": "Single-task optimum exists but says nothing about two task families preferring different views — our step-0 premise, which failed."
+    "paper": "56µm 裁窗最优（FOV 扫描 28/56/112/224µm = 79.1/83.3/82.5/77.1 macro-F1）；112µm guard band 保证 test/train 无视野重叠。",
+    "code": "checkpoint 公开（HF zhihuanglab/CytoFormer）；0.25 µm/px 证实。",
+    "matters": "单任务最优视野存在，但说明不了两个任务族偏好不同视野——那是我们 step-0 的前提，且它失败了。"
   },
   {
     "repo": "CELLO", "id": "arXiv 2609.36429", "kind": "discrepancy",
-    "paper": "Coordinate query + 2D RoPE cross-attention on a shared tile forward; PCC gains attributed jointly to all components.",
-    "code": "The paper's own Table 7 admits λ and the Gaussian distance decay 'do not show a clear effect'; CLS global-token fusion consistently degrades (−13.6%).",
-    "matters": "Do not cite CELLO as evidence that coordinate mechanisms are solved; its working core is the shared tile forward + anchored readout."
+    "paper": "坐标 query + 2D RoPE cross-attention 共享 tile 前向；PCC 增益归因于全部组件联合。",
+    "code": "论文自己的 Table 7 承认 λ 与高斯距离衰减 \"do not show a clear effect\"；CLS 全局 token 融合一致掉点（−13.6%）。",
+    "matters": "不能引用 CELLO 证明坐标机制已解决；它真正起作用的是共享 tile 前向 + 坐标锚定 readout。"
   }
 ]

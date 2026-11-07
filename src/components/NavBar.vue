@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from "vue";
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/study", label: "Study" },
-  { to: "/forensics", label: "Forensics" },
-  { to: "/notes", label: "Notes" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "首页" },
+  { to: "/study", label: "研究" },
+  { to: "/forensics", label: "取证" },
+  { to: "/notes", label: "笔记" },
+  { to: "/about", label: "关于" },
+  { to: "/contact", label: "联系" },
 ];
 const open = ref(false);
 function toggle() {
@@ -24,9 +24,9 @@ function toggle() {
           class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
           :class="{ 'text-accent!': $route.path === l.to }">{{ l.label }}</router-link>
       </div>
-      <button @click="toggle" aria-label="Toggle theme"
+      <button @click="toggle" aria-label="切换主题"
         class="ml-auto md:ml-2 w-9 h-9 rounded-full border border-slate-300 dark:border-slate-600 hover:rotate-45 transition-transform">◐</button>
-      <button @click="open = !open" class="md:hidden text-xl" aria-label="Menu">☰</button>
+      <button @click="open = !open" class="md:hidden text-xl" aria-label="菜单">☰</button>
     </div>
     <div v-if="open" class="md:hidden border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-950/95 px-5 py-3 flex flex-col gap-2">
       <router-link v-for="l in links" :key="l.to" :to="l.to" @click="open = false"
