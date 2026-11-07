@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Celine (sharpca) — Research Notes</title>
+<style>
+  :root { --ink:#1f2430; --muted:#5c6675; --line:#e3e7ee; --accent:#2456a6; --bg:#fbfcfe; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.7 Georgia,'Times New Roman',serif; color:var(--ink); background:var(--bg); }
+  main { max-width:760px; margin:0 auto; padding:48px 24px 80px; }
+  h1 { font-size:1.9rem; margin:0 0 4px; }
+  h2 { font-size:1.15rem; margin:2.2em 0 .6em; border-bottom:1px solid var(--line); padding-bottom:4px; }
+  .tagline { color:var(--muted); margin:0 0 8px; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.95rem; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin:16px 0; }
+  .card h3 { margin:.1em 0 .5em; font-size:1.02rem; font-family:ui-sans-serif,system-ui,sans-serif; }
+  ul { margin:.4em 0; padding-left:1.25em; }
+  li { margin:.35em 0; }
+  .num { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.92em; }
+  .muted { color:var(--muted); font-size:.9rem; }
+  footer { border-top:1px solid var(--line); margin-top:56px; padding-top:14px; color:var(--muted); font-size:.85rem; font-family:ui-sans-serif,system-ui,sans-serif; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Celine</h1>
+  <p class="tagline">GitHub: <a href="https://github.com/sharpca">@sharpca</a> · Research notes · Page last updated 2026-11-07</p>
+
+  <h2>About</h2>
+  <p>Personal page for research notes and preprints-in-progress. Interests: computational pathology,
+  self-supervised representation learning at cell level, and evaluation methodology.</p>
+
+  <h2>Research notes</h2>
+
+  <div class="card">
+    <h3>2026-11-07 · Does the teacher's field of view matter in nuclear SSL? — a pre-registered three-arm answer</h3>
+    <p>Controlled continued-training study (ViT-S/8 initialized from public nuclear-SSL weights, single-domain
+    pool, identical budget and probe contracts) comparing three supervision contracts on the same 62k-cell pool:
+    (a) no cross-view objective, (b) full-context (96px) teacher distillation, (c) a teacher restricted to the
+    co-visible 40px region before encoding. Three task families (fine-grained nuclei typing, cross-domain typing,
+    tile-level organ) with patient/tile-level paired bootstrap inference, two seeds, and an independent adversarial
+    audit plus bit-level closure rerun.</p>
+    <ul>
+      <li><strong>Co-visible restriction is not necessary.</strong> The full-context teacher outperforms the
+      restricted one by <span class="num">+2.96 pp bAcc [95% CI 1.92–3.99]</span> on fine-grained typing — a clean
+      content effect after confound exclusion (same 26 aligned target pairs, same reduction, budget-matched).</li>
+      <li><strong>Full-context teacher adaptation is the only contract that beats the frozen anchor</strong>
+      (<span class="num">+3.42 pp [2.40–4.42]</span>). The gain sits almost entirely in low-margin cells
+      (96.3% in the bottom margin quartile) and minority-class recovery.</li>
+      <li><strong>The cross-domain cost is real but structured:</strong> a broad content-level probability shift
+      concentrated on a pre-existing confusable family (one class macro-F1 <span class="num">−21.6 pp</span>);
+      it is not context leakage (0/64 false positives had any same-class neighbor), not regularization strength,
+      and creates no new confusion modes across a 16-model audit.</li>
+      <li><strong>Takeaway:</strong> at equal budget, target-distribution richness dominated view-restriction.
+      A dose-response check (64/144px teachers) is drafted as the closing experiment.</li>
+    </ul>
+    <p class="muted">Honest terms: continued-training adaptation (not from scratch); single-domain pool; TCGA-overlap
+    in-domain tendencies on absolute numbers. Preprint with full contracts, audit trail and gate logic in preparation.</p>
+  </div>
+
+  <h2>Contact</h2>
+  <p>Best via <a href="https://github.com/sharpca">GitHub</a>.</p>
+
+  <footer>© 2026 Celine · static page, no tracking · <a href="https://github.com/sharpca/sharpca.github.io">source</a></footer>
+</main>
+</body>
+</html>
