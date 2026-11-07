@@ -5,7 +5,7 @@
     "cells": 62263,
     "audit_models": 16,
     "gates": 4,
-    "design": "ViT-S/8 续训适配（LEMON 官方权重初始化）；单域 SSL 池（PanNuke fold1，62,263 细胞）；同预算同探针合同（R1）；患者/tile 级配对 bootstrap（B=500，双 seed pooled）；独立对抗审计 + bit-level 闭环复跑"
+    "design": "ViT-S/8 续训适配（LEMON 官方权重初始化）；单域 SSL 池（PanNuke fold1，62,263 细胞）；同预算同探针合同（R1）；患者/tile 级配对 bootstrap（B=500，双 seed pooled）；独立对抗审计 + bit-level 闭环复跑。MIM v1.1 扩展：臂 m（InfoNCE+MIM 辅助 λ=0.5）与臂 d（distill+MIM 锚）"
   },
   "arms": [
     { "id": "init", "label": "init · 冻结锚点（LEMON L12）", "t1": 0.6565, "t2": 0.7757, "t3": 0.6837 },

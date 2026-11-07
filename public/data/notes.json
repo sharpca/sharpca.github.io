@@ -16,5 +16,17 @@
     "title": "站点 v2：Vue 3 多页重写",
     "tags": ["工程"],
     "summary": "个人页从单文件静态升级为 Vue 3 + vue-router + Tailwind CSS 4 + axios 的 Vite 多页工程（六路由），GitHub Actions 自动部署；数据层保留 Supabase 接入点。"
+  },
+  {
+    "date": "2026-11-08",
+    "title": "MIM 锚定：重建目标消除蒸馏的家族精度坍缩",
+    "tags": ["研究", "SSL", "预注册", "MIM"],
+    "summary": "在预注册三臂合同上增补两臂（v1.1）：臂 m（InfoNCE+MIM 辅助）in-domain +4.55 pp [+3.47,+5.69]；臂 d（distill+MIM 锚）把 Neutrophil 假阳性率从 24.4/1000 压回 8.7（6 对）/11.35 均值（7 对，双 seed 15.21/7.48，均低于 15.3 阈值），T1 代价 mean 口径 −0.35 pp。经对抗审计（有条件可靠→披露补齐）与 bit-level 闭环复跑。GM3（重建替代蒸馏）不成立：m 的 T1 低于 b 2.18 pp，但 T2 macro-F1 +8.74 pp。结论：重建与蒸馏互补——重建锚定幅度、蒸馏转移内容。"
+  },
+  {
+    "date": "2026-11-08",
+    "title": "NuSPIRe 进台账：DAPI 单视图 MIM 支柱 + 复现启动",
+    "tags": ["取证", "复现"],
+    "summary": "Genome Biology 2026（Hua et al.）：DAPI 单核图像 15.52M MIM 预训练，无 teacher/无多视图——不与我们主张撞车，nuclear SSL 设计空间确认为三支柱（H&E 蒸馏线 / DAPI 重建线 / spatial-omics 锚定线）。代码完整性 4.5/5，checkpoint 结构验证 PASS（334 tensors，config 与论文一致）；发现无 pooler 权重（探针须用 last_hidden_state[:,0]）。Tier A（CosMx Lung 5-1 下游复现）数据准备中，Tier B 降规模预训练按条件排期。"
   }
 ]
