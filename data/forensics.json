@@ -1,0 +1,50 @@
+[
+  {
+    "repo": "LEMON", "id": "arXiv 2603.25802", "kind": "discrepancy",
+    "paper": "Local-global crop pairs deleted because 40px patches 'carry insufficient information'; KoLeo replaced by KDE.",
+    "code": "No official training repository exists (GitHub 404); weights on HF are non-gated MIT and SHA-256 match the local copy.",
+    "matters": "The deletion is a patch, not an information-boundary mechanism; our three-arm study formalizes exactly the question they sidestepped."
+  },
+  {
+    "repo": "LEMON — readout", "id": "Table 4 / Fig. 4", "kind": "precedent",
+    "paper": "Center-token (mean of 4×4 centered patch tokens) reads out at 0.727 on tile-FM probing while class tokens collapse to 0.52–0.54.",
+    "code": "Consistent with the released checkpoint layout (12 heads, patch 8).",
+    "matters": "Justifies token-level (never CLS) targets in any distillation arm."
+  },
+  {
+    "repo": "VOLTA", "id": "Nat Commun 15:3942", "kind": "discrepancy",
+    "paper": "Env branch encoder described as 'LambdaNet'; MoCo memory queue of 65,536; env-loss weight λ unreported.",
+    "code": "No LambdaNet — env branch is an independent ResNet-18; queue = 0 (no queue); λ_env = 1.0 via the README command (--env-coef 1.0).",
+    "matters": "Cite repo values for reproducibility; the paper's reported queue does not exist in code."
+  },
+  {
+    "repo": "VOLTA — masking", "id": "main.py training loop", "kind": "precedent",
+    "paper": "Target cell and neighboring cells are masked to prevent shortcut and neighbor-type bias.",
+    "code": "Hard zeroing in the training loop: patch[0][mask...] = 0, a bool square centered on the nucleus (side = int(size × mask_ratio)); segmentation mode zeroes all nucleus pixels.",
+    "matters": "Masking happens at the pixel/loss end, after the encoder sees the full image — exactly the family our restricted-teacher arm was designed to test (and it lost)."
+  },
+  {
+    "repo": "iBOT", "id": "arXiv 2111.07832", "kind": "discrepancy",
+    "paper": "facebookresearch/iBOT is cited by many; random-MIM described with probability r=0.",
+    "code": "Official code lives at bytedance/ibot; random-MIM is a ratio list + random.choice (loader.py:37-43), r=0 means full-token distillation; patch target = softmax((logit − center)/τ_p) with centering EMA 0.9, τ_p 0.04→0.07; patch:CLS = 1:1.",
+    "matters": "r=0 is exactly our winning arm's signal form — the closest mechanism precedent, which is why our claim had to rest on the adaptation-setting attribution, not the signal."
+  },
+  {
+    "repo": "CellPath-Bench", "id": "arXiv 2608.21060", "kind": "precedent",
+    "paper": "Nuc readout 'samples the feature grid at the registered nuclear center … does not imply a nucleus-restricted receptive field'.",
+    "code": "Evaluation-only; 304,920 probe runs; protocol scores explicitly not comparable across protocols.",
+    "matters": "Readout ≠ receptive field: training-signal differences must carry the claim, which shaped our probe contract."
+  },
+  {
+    "repo": "CytoFormer", "id": "arXiv 2608.16718", "kind": "precedent",
+    "paper": "56µm crop is optimal (FOV sweep 28/56/112/224µm = 79.1/83.3/82.5/77.1 macro-F1); 112µm guard band prevents any test/train view overlap.",
+    "code": "Checkpoint public (HF zhihuanglab/CytoFormer); 0.25 µm/px confirmed.",
+    "matters": "Single-task optimum exists but says nothing about two task families preferring different views — our step-0 premise, which failed."
+  },
+  {
+    "repo": "CELLO", "id": "arXiv 2609.36429", "kind": "discrepancy",
+    "paper": "Coordinate query + 2D RoPE cross-attention on a shared tile forward; PCC gains attributed jointly to all components.",
+    "code": "The paper's own Table 7 admits λ and the Gaussian distance decay 'do not show a clear effect'; CLS global-token fusion consistently degrades (−13.6%).",
+    "matters": "Do not cite CELLO as evidence that coordinate mechanisms are solved; its working core is the shared tile forward + anchored readout."
+  }
+]
